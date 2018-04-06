@@ -1,0 +1,28 @@
+version: '2'
+services:
+  php:
+    image: php:apache
+    build: php
+    links:
+      - lamp_db:mysql
+    ports:
+      - 8080:80
+    volumes:
+      - ./www:/var/www
+  lamp_db:
+    image: mariadb
+    volumes:
+      - mysql_volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepass
+  phpmyadmin:
+    image: corbinu/docker-phpmyadmin
+    links:
+      - lamp_db:mysql
+    ports:
+      - 8181:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: examplepass
+volumes:
+  mysql_volume:
