@@ -14,6 +14,10 @@ stop:
 logs:
 	@docker-compose logs -f
 
+clean:
+	docker-compose down -v
+	sudo rm -rf www
+
 www:
 	mkdir www
 
@@ -23,10 +27,12 @@ www/html: www
 drupal-$(DRUPAL_VERSION).tar.gz:
 	wget https://ftp.drupal.org/files/projects/drupal-$(DRUPAL_VERSION).tar.gz
 
-www/html/index.php: www/html
-	tar -xzf drupal-$(DRUPAL_VERSION).tar.gz --strip-components=1 -C www/html
+www/html/index.php: www/html drupal-$(DRUPAL_VERSION).tar.gz
+	sudo tar -xzf drupal-$(DRUPAL_VERSION).tar.gz --strip-components=1 -C www/html
 
 drupal_unpack: www/html/index.php
+	sudo chown -R www-data:www-data www
+	sudo chmod -R g+rwX www
 
 drupal_daemon: drupal_unpack
 	docker-compose up -d
