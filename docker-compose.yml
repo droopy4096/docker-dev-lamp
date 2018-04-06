@@ -21,14 +21,5 @@ services:
       - lamp_db:db
     ports:
       - 8282:80
-  phpmyadmin2:
-    image: corbinu/docker-phpmyadmin
-    links:
-      - lamp_db:mysql
-    ports:
-      - 8181:80
-    environment:
-      MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: examplepass
 volumes:
   mysql_volume:
