@@ -16,6 +16,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: examplepass
   phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - lamp_db:db
+    ports:
+      - 8282:80
+  phpmyadmin2:
     image: corbinu/docker-phpmyadmin
     links:
       - lamp_db:mysql

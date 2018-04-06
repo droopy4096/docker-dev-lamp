@@ -1,8 +1,11 @@
 DRUPAL_VERSION ?= 8.5.1
-start:
+build:
+	docker-compose build
+
+start: build
 	docker-compose up
 
-daemon:
+daemon: build
 	docker-compose up -d
 
 stop:
@@ -28,5 +31,5 @@ drupal_unpack: www/html/index.php
 drupal_daemon: drupal_unpack
 	docker-compose up -d
 
-drupal: drupal_unpack
+drupal: drupal_unpack build
 	docker-compose up
